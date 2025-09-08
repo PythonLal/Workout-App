@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Weekly Fitness Timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weekly fitness timer app with customizable workouts and routines">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="mainTitle">Weekly Fitness Timer</h1>
+        <div class="workout-selection-text">Choose your Daily workout plan :</div>
+        <div class="routine-selection" role="group" aria-label="Weekly workout routine selection"></div>
+
+        <div class="exercise-display" aria-live="polite">
+            <div class="exercise-header">
+                <h2 class="exercise-name"></h2>
+                <div class="exercise-progress" aria-live="polite"></div>
+            </div>
+            <div class="exercise-gif" role="img">
+                <img id="exerciseGif" src="" alt="Exercise demonstration">
+            </div>
+            <div class="exercise-info"></div>
+            <div class="motivation-message" aria-live="polite"></div>
+            <div class="timer-container">
+                <div class="timer" role="timer" aria-label="Exercise timer">00:00</div>
+                <div class="reps-display" aria-label="Repetitions"></div>
+                <div class="break-indicator">Break Time</div>
+            </div>
+            <div class="timer-controls">
+                <button class="control-btn pause" onclick="togglePause()" aria-label="Pause workout">Pause</button>
+            </div>
+            <button class="proceed-btn" onclick="proceedToNext()" aria-label="Go to next exercise">Next Exercise →</button>
+        </div>
+
+        <div class="complete" role="status" aria-live="assertive">
+            <div class="complete-icon">🎉</div>
+            <div class="complete-message">Workout Complete! Great job! 💪</div>
+            <div class="streak-info"></div>
+            <button class="restart-btn" onclick="showRoutineSelection()" aria-label="Start a new workout">New Workout</button>
+        </div>
+    </div>
+    <audio id="chime" preload="auto"><source src="chime.mp3" type="audio/wav"></audio>
+    <script>
+        // DRY: Generate routine buttons programmatically
+        const routines = [
+            { day: 'monday', name: 'Upper Body Focus', duration: 30 },
+            { day: 'tuesday', name: 'Lower Body Focus', duration: 30 },
+            { day: 'wednesday', name: 'Core & Grip Focus', duration: 30 },
+            { day: 'thursday', name: 'Full Body HIIT', duration: 30 },
+            { day: 'friday', name: 'Strength & Endurance', duration: 30 },
+            { day: 'saturday', name: 'Power & Conditioning', duration: 30 },
+            { day: 'sunday', name: 'Active Recovery', duration: 25 }
+        ];
+        
+        document.querySelector('.routine-selection').innerHTML = routines.map(r => 
+            `<button class="routine-btn ${r.day}" onclick="startRoutine('${r.day}')" aria-label="Start ${r.day.charAt(0).toUpperCase() + r.day.slice(1)} ${r.name}">${r.day.charAt(0).toUpperCase() + r.day.slice(1)} - ${r.name} ${r.duration} min</button>`
+        ).join('');
+    </script>
+    <script src="workouts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
